@@ -11,12 +11,17 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/forks/search',
+    name: 'Forks',
+    query: {page: 1, owner: '', repository: ''},
+    component: () => import('../views/Forks.vue'),
+    beforeEnter(to, from, next) {
+      if (to.query.owner && to.query.repository) {
+        next()
+      } else {
+        router.push({name: 'Home'})
+      }
+    }
   }
 ]
 
