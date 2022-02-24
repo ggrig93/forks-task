@@ -13,10 +13,10 @@ const routes = [
   {
     path: '/forks/search',
     name: 'Forks',
-    query: {page: 1, owner: '', repository: ''},
+    query: {page: 1, repository: ''},
     component: () => import('../views/Forks.vue'),
     beforeEnter(to, from, next) {
-      if (to.query.owner && to.query.repository) {
+      if (to.query.repository) {
         next()
       } else {
         router.push({name: 'Home'})

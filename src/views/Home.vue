@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="10">
           <v-text-field
-              label="owner/repository name"
+              label="repository name"
               v-model.lazy="text"
               @input="error = false"
           ></v-text-field>
@@ -20,7 +20,7 @@
     <v-scale-transition>
       <div v-if="error">
         <p class="text-center red--text text-h1 mt-16">Incorrect Input</p>
-        <p class="text-center mt-8 text-h4">Input must be <code>octocat/hello-world</code> like this!</p>
+        <p class="text-center mt-8 text-h4">Input must be <code>hello-world</code> like this!</p>
       </div>
     </v-scale-transition>
   </v-container>
@@ -37,13 +37,12 @@
     },
     methods: {
       search() {
-        if (this.text.includes('/')) {
+        if (this.text.trim() !== '') {
           this.$router.push({
             name: 'Forks',
             query: {
               page: 1,
-              owner: this.text.split('/')[0],
-              repository: this.text.split('/')[1]
+              repository: this.text.trim()
             }
           })
           this.error = false

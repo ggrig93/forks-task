@@ -7,7 +7,7 @@
       <v-row>
         <v-col cols="12">
           <p class="mt-8">
-            {{$route.query.owner + '/' + $route.query.repository}}
+            {{$route.query.repository}}
           </p>
         </v-col>
       </v-row>
@@ -59,7 +59,7 @@
           <div class="text-center">
             <v-pagination
                 v-model="page"
-                :length="10"
+                :length="forksCount"
                 :total-visible="5"
             ></v-pagination>
           </div>
@@ -97,16 +97,16 @@ export default {
     "$route": {
       immediate: true,
       handler() {
-        this.getForks({text: this.$route.query.owner + '/' + this.$route.query.repository, page: this.page})
+        this.getForks({text: this.$route.query.repository, page: this.page})
       }
     },
     page(val) {
-      this.$router.replace({query: {page: val, owner: this.$route.query.owner, repository: this.$route.query.repository}})
+      this.$router.replace({query: {page: val, repository: this.$route.query.repository}})
     }
 
   },
   computed: {
-    ...mapState(['allForks', 'loading']),
+    ...mapState(['allForks', 'loading', 'forksCount']),
     headers () {
       return [
         { text: 'Repository', value: 'repo', sortable: false},
