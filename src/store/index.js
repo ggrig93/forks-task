@@ -26,7 +26,6 @@ export default new Vuex.Store({
   },
   actions: {
     getForks({commit}, {text, page}) {
-      console.log(page)
       commit('setLoading', true)
       http.get(`/search/repositories?q=${text}&page=${page}`)
         .then(res => {
@@ -38,7 +37,8 @@ export default new Vuex.Store({
             url: el.html_url ,
             favorite: JSON.parse(localStorage.getItem('favorites'))?.find(e => e.id === el.id) ? true : false
           }))
-          commit('setForksCount', Math.ceil(res.data.total_count / 30))
+          let pageCount = res.data.total_count > 1000 ? 32 : Math.ceil(res.data.total_count / 30)
+          commit('setForksCount', pageCount)
           commit('setForks', data)
         })
         .catch(e => {
